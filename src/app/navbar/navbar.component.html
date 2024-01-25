@@ -1,0 +1,20 @@
+<!-- app.component.html -->
+
+<nav>
+  <ul>
+    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+    <li class="right-link" *ngIf="!this.authService.isLoggedIn()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    <li class="right-link" *ngIf="this.authService.isLoggedIn()"><a routerLink="/TaskManagementSystem"  routerLinkActive="active">TaskManagementSystem</a></li>
+    <!-- <li class="right-link" *ngIf="this.authService.isLoggedIn()"><a routerLink="/register" routerLinkActive="active">  
+      <button type="button" (click)="logout()">Logout</button>
+    </a></li> -->
+    <li class="right-link" *ngIf="authService.isLoggedIn()">
+      <a (click)="logout()" routerLinkActive="active">
+        Logout
+      </a>
+    </li>
+
+  </ul>
+</nav>
+
+<!-- Your router-outlet or other content goes here -->

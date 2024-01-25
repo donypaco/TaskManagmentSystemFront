@@ -1,0 +1,39 @@
+nav {
+  background-color: #f8f9fa;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #343a40;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #007bff; 
+}
+
+.active {
+  color: #007bff; 
+}
+
+.right-link {
+  margin-left: 20px;
+}
