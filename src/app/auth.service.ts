@@ -7,15 +7,15 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'https://localhost:7165';
+  private baseUrl = 'https://localhost:7280';
   private isAuthenticated: boolean = false;
   private authToken: string | null = null; 
 
   constructor(private http: HttpClient) { }
 
-  register(username: string, password: string): Observable<any> {
-    const requestBody = { username, password };
-    return this.http.post(`${this.baseUrl}/api/auth/Register`, requestBody).pipe(
+  register(username: string, password: string, email: string): Observable<any> {
+    const requestBody = { username, password, email};
+    return this.http.post(`${this.baseUrl}/api/Auth/Register`, requestBody).pipe(
       tap((response: any) => {
         this.isAuthenticated = true; 
         this.setToken(response.token);
@@ -25,7 +25,7 @@ export class AuthService {
 
   logIn(username: string, password: string): Observable<any> {
     const requestBody = { username, password };
-    return this.http.post(`${this.baseUrl}/api/auth/Login`, requestBody).pipe(
+    return this.http.post(`${this.baseUrl}/api/Auth/Login`, requestBody).pipe(
       tap((response: any) => {
         if (response && response.token) {
           this.isAuthenticated = true;

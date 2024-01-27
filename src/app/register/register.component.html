@@ -1,0 +1,33 @@
+<div class="register-container">
+    <h2>Register</h2>
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <label for="username">Username:</label>
+        <input type="text" id="username" formControlName="username">
+        <div class="alert"
+            *ngIf="getUsernameControl()?.hasError('required') && (getUsernameControl()?.dirty || getUsernameControl()?.touched)">
+            Username is required.
+        </div>
+        <div class="alert" *ngIf="getUsernameControl()?.hasError('minlength')">
+            Username must be at least 3 characters long.
+        </div>
+        <div class="alert" *ngIf="getUsernameControl()?.hasError('maxlength')">
+            Username must be at most 20 characters long.
+        </div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$">
+        <div class="alert" *ngIf="((getEmailControl()?.hasError('required') || getEmailControl()?.hasError('pattern')) 
+        && (getEmailControl()?.dirty || getEmailControl()?.touched)) ">
+            Enter a valid email address.
+        </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password">
+        <div class="alert"
+            *ngIf="getPasswordControl()?.hasError('required') && (getPasswordControl()?.dirty || getPasswordControl()?.touched)">
+            Password is required.
+        </div>
+        <div class="alert" *ngIf="getPasswordControl()?.hasError('minlength')">
+            Password must be at least 8 characters long
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</div>

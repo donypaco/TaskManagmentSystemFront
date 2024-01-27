@@ -1,0 +1,20 @@
+/* src/app/home/home.component.css */
+
+.container {
+    text-align: center;
+    margin-top: 50px; /* Adjust top margin for spacing */
+  }
+  
+  h2 {
+    color: #333; /* Dark text color */
+    font-size: 28px; /* Font size for the heading */
+    margin-bottom: 10px; /* Bottom margin for spacing */
+  }
+  
+  p {
+    color: #555; /* Slightly darker text color */
+    font-size: 16px; /* Font size for paragraphs */
+    line-height: 1.5; /* Line height for better readability */
+    margin-bottom: 15px; /* Bottom margin for spacing between paragraphs */
+  }
+  
