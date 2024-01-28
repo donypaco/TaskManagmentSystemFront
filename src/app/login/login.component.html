@@ -4,16 +4,15 @@
     <label for="username">Username:</label>
     <input type="text" id="username" formControlName="username" required>
     <div class="alert"
-    *ngIf="this.logInForm.get('username')?.hasError('required') && (this.logInForm.get('username')?.dirty || this.logInForm.get('username')?.touched)">
-    Username is required.
-</div>
+      *ngIf="this.logInForm.get('username')?.hasError('required') && (this.logInForm.get('username')?.dirty || this.logInForm.get('username')?.touched)">
+      Username is required.
+    </div>
     <label for="password">Password:</label>
     <input type="password" id="password" formControlName="password" required>
     <div class="alert"
-    *ngIf="this.logInForm.get('password')?.hasError('required') && (this.logInForm.get('password')?.dirty || this.logInForm.get('password')?.touched)">
-    Password is required.
-</div>
-
+      *ngIf="this.logInForm.get('password')?.hasError('required') && (this.logInForm.get('password')?.dirty || this.logInForm.get('password')?.touched)">
+      Password is required.
+    </div>
     <button type="submit">Login</button>
     <label for="register">No account? Register:</label>
     <a (click)="navigateToRegister()" class="register-link">Register</a>

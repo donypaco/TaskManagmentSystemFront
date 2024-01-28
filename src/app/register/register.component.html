@@ -14,10 +14,17 @@
             Username must be at most 20 characters long.
         </div>
         <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email" pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$">
+        <input type="text" id="email" formControlName="email" pattern="^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,7}$" required>
         <div class="alert" *ngIf="((getEmailControl()?.hasError('required') || getEmailControl()?.hasError('pattern')) 
         && (getEmailControl()?.dirty || getEmailControl()?.touched)) ">
             Enter a valid email address.
+        </div>
+        <label for="selectedRoleId">Select Role:</label>
+        <select id="selectedRoleId" formControlName="selectedRoleId" class="form-control" required>
+          <option *ngFor="let role of roles" [value]="role.id">{{ role.roleName }}</option>
+        </select>
+        <div class="alert" *ngIf="getRoleIdControl()?.hasError('required') && (getRoleIdControl()?.dirty ||  getRoleIdControl()?.touched)">
+          Role is required.
         </div>
         <label for="password">Password:</label>
         <input type="password" id="password" formControlName="password">

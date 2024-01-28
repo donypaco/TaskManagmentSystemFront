@@ -9,33 +9,39 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private baseUrl = 'https://localhost:7280';
   private isAuthenticated: boolean = false;
-  private authToken: string | null = null; 
+  private authToken: string | null = null;
 
   constructor(private http: HttpClient) { }
 
-  register(username: string, password: string, email: string): Observable<any> {
-    const requestBody = { username, password, email};
+  register(username: string, password: string, email: string, roleId: number): Observable<any> {
+    const requestBody = { username, password, email, roleId };
+    console.log(requestBody)
     return this.http.post(`${this.baseUrl}/api/Auth/Register`, requestBody).pipe(
       tap((response: any) => {
-        this.isAuthenticated = true; 
-        this.setToken(response.token);
-      })
-    );
-    }
-
-  logIn(username: string, password: string): Observable<any> {
-    const requestBody = { username, password };
-    return this.http.post(`${this.baseUrl}/api/Auth/Login`, requestBody).pipe(
-      tap((response: any) => {
-        if (response && response.token) {
+        if (response && response.token.result) {
           this.isAuthenticated = true;
-          this.setToken(response.token);
+          this.setToken(response.token.result);
         }
-        })
+      })
     );
   }
 
-  logOut(){
+  logIn(username: string, password: string): Observable<any> {
+    debugger
+    const requestBody = { username, password };
+    return this.http.post(`${this.baseUrl}/api/Auth/Login`, requestBody).pipe(
+      tap((response: any) => {
+        if (response && response.token.result) {
+          this.isAuthenticated = true;
+          this.setToken(response.token);
+        }
+      })
+    );
+  }
+  getRoles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/Auth/Roles`);
+  }
+  logOut() {
     this.clearToken();
     this.isAuthenticated = false;
   }
@@ -57,7 +63,10 @@ export class AuthService {
     this.authToken = null;
     localStorage.removeItem('authToken');
   }
-  setAuthenticated(bool:boolean ){
+  setAuthenticated(bool: boolean) {
     this.isAuthenticated = bool;
+  }
+  getEmployess(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/Auth/Employees`);
   }
 }

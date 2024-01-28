@@ -1,0 +1,32 @@
+<button (click)="redirectToCreateTaskPage()" class="add-task-button">Create New Task</button>
+
+<div class="kanban-board">
+    <div class="kanban-column">
+        <h3>All Tasks</h3>
+        <div class="kanban-cards">
+            <div class="kanban-card" *ngFor="let task of tasks">
+                <h4>Title: <span *ngIf="!task.editMode">{{ task.title }}</span>
+                    <input *ngIf="task.editMode" [(ngModel)]="task.title" />
+                </h4>
+                <p>Description: <span *ngIf="!task.editMode">{{ task.description }}</span>
+                    <textarea *ngIf="task.editMode" [(ngModel)]="task.description"></textarea>
+                </p>
+                <p>UserResponsible: {{ task.userAssigned }}</p>
+                <p>Created Date: {{ task.createdDate | date:'yyyy-MM-dd HH:mm'}}</p>
+                <p *ngIf="task.completedDate !== '0001-01-01T00:00:00'">Completed Date: {{ task.completedDate | date:'yyyy-MM-dd HH:mm'}}</p>
+                <p>Status:
+                    <span>{{ getStatusName(task.statusId) }}</span>
+                    <select [(ngModel)]="task.statusId" [disabled]="task.editMode" (change)="onStatusChange(task)">
+                    <option *ngFor="let status of statuses" [value]="status.id">{{ status.status }}</option>
+                    </select>
+                </p>
+                <button *ngIf="!task.editMode" (click)="editTask(task)">Edit</button>
+                <button *ngIf="task.editMode" (click)="saveTask(task.id,task)">Save</button>
+                <button *ngIf="task.editMode" (click)="cancelEdit(task)">Cancel</button>
+                <button *ngIf="!task.editMode" (click)="deleteTask(task.id)">Delete Task</button>
+                <button *ngIf="task.statusTouched" (click)="changeStatus(task.id, task.statusId)">Change Status</button>
+                <div *ngIf="task.successMessage" class="success-message">{{ task.successMessage }}</div>
+            </div>
+        </div>
+    </div>
+</div>
