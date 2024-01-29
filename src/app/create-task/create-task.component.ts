@@ -34,7 +34,6 @@ export class CreateTaskComponent {
   }
 
   onSubmit() {
-    debugger
       if (this.createForm.valid) {
           // Call your task service to create a new task
           this.taskService.addTask(this.createForm.value).subscribe(
@@ -51,7 +50,7 @@ export class CreateTaskComponent {
                 } 
         
                 else {
-                  this.successMessage = 'Auction creation failed';
+                  this.successMessage = 'Task creation failed';
                 }
               }
         

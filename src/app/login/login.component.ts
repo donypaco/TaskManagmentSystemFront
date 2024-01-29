@@ -19,7 +19,6 @@ export class LoginComponent{
 
   onSubmit() {
     if (this.logInForm.valid) {
-debugger
       const username = this.logInForm.get('username')?.value;
       const password = this.logInForm.get('password')?.value;
       console.log('Username:', username);

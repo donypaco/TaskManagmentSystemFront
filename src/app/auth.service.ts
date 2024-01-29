@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   logIn(username: string, password: string): Observable<any> {
-    debugger
     const requestBody = { username, password };
     return this.http.post(`${this.baseUrl}/api/Auth/Login`, requestBody).pipe(
       tap((response: any) => {
@@ -52,9 +51,9 @@ export class AuthService {
 
   setToken(token: string) {
     this.authToken = token;
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('authToken', JSON.stringify(token)); 
   }
-
+  
   getToken(): string | null {
     return this.authToken || localStorage.getItem('authToken');
   }
