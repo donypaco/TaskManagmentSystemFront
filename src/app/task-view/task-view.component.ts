@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class TaskViewComponent {
   tasks: any[] = []; 
   statuses: any[] = [];
+  successMessage : string = '';
 
   constructor(private taskService: TaskService, private router:Router) { }
 
@@ -19,40 +20,28 @@ export class TaskViewComponent {
   }
 
   loadTasks() {
-    // this.taskService.getTasks().subscribe((data: any) => {
-    //   this.tasks = data;
-      
-    // });
     this.taskService.getTasks().subscribe(
       (tasks) => {
-        this.tasks = tasks.map((task) => ({...task, successMessage: ''}));
+        this.tasks = tasks;
       },
       (error) => {
-        console.error('Failed to fetch auctions', error);
+        console.error('Failed to fetch Tasks', error);
       }
     );
   }
   deleteTask(taskId: number): void {
-    debugger
     const task = this.tasks.find(t => t.id === taskId);
 
     this.taskService.deleteTask(taskId).subscribe(
       (response) => {
-        task.successMessage = 'Auction successfully deleted';
+        this.loadTasks();
+        this.successMessage = `Task ${task.title} successfully deleted`;
       },
-      (HttpErrorResponse ) => {        console.log(HttpErrorResponse )
-
-        console.log(HttpErrorResponse )
-        if (HttpErrorResponse  && HttpErrorResponse.error.message) {
-          task.successMessage = HttpErrorResponse.error.message;
+      (error) => {
+        if (error) {
+          this.loadTasks();
+          this.successMessage =  `${error.text} ${task.title}`;
         } 
-        else if (HttpErrorResponse  && HttpErrorResponse.error) {
-          task.successMessage = HttpErrorResponse.error;
-        } 
-
-        else {
-          task.successMessage = 'Auction deletion failed';
-        }
       }
     )
     this.loadTasks();
@@ -64,10 +53,18 @@ export class TaskViewComponent {
     task.editMode = false;
   }
   saveTask(id:number, task:any ) {
-    console.log('task to be edited : ', task.id, task.id, task.description)
-    this.taskService.editTask(id, task.title, task.description).subscribe((data: any) => {
-    });
-    this.loadTasks();
+    this.taskService.editTask(id, task.title, task.description).subscribe(
+      (response) => {
+        this.loadTasks();
+        this.successMessage = `Task ${task.title} successfully edited`;
+      },
+      (error) => {
+        if (error) {
+          this.loadTasks();
+          this.successMessage =  `${error.text} ${task.title}`;
+        } 
+      }
+    );
   }
   getStatuses() {
     this.taskService.getStatuses().subscribe((data: any) => {

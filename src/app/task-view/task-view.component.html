@@ -1,4 +1,5 @@
 <button (click)="redirectToCreateTaskPage()" class="add-task-button">Create New Task</button>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
 <div class="kanban-board">
     <div class="kanban-column">
@@ -25,7 +26,6 @@
                 <button *ngIf="task.editMode" (click)="cancelEdit(task)">Cancel</button>
                 <button *ngIf="!task.editMode" (click)="deleteTask(task.id)">Delete Task</button>
                 <button *ngIf="task.statusTouched" (click)="changeStatus(task.id, task.statusId)">Change Status</button>
-                <div *ngIf="task.successMessage" class="success-message">{{ task.successMessage }}</div>
             </div>
         </div>
     </div>

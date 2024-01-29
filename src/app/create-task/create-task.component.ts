@@ -12,6 +12,7 @@ export class CreateTaskComponent {
   createForm: FormGroup;
   statuses: any[] = [];
   employees: any[] = [];
+  successMessage : string = '';
 
   constructor(private fb: FormBuilder, private router: Router, private taskService: TaskService, private authService: AuthService) {
       this.createForm = this.fb.group({
@@ -37,13 +38,23 @@ export class CreateTaskComponent {
       if (this.createForm.valid) {
           // Call your task service to create a new task
           this.taskService.addTask(this.createForm.value).subscribe(
-              response => {
-                  console.log('Task created successfully:', response);
-                  this.router.navigate(['/tasks']); // Navigate back to the task list page
+            (response) => {
+                this.successMessage = 'Task successfully created';
               },
-              error => {
-                  console.error('Error creating task:', error);
+              (HttpErrorResponse ) => {
+                console.log('HttpErrorResponse',HttpErrorResponse,HttpErrorResponse.error.message)
+                if (HttpErrorResponse  && HttpErrorResponse.error.text) {
+                  this.successMessage = HttpErrorResponse.error.text;
+                } 
+                else if (HttpErrorResponse  && HttpErrorResponse.error) {
+                  this.successMessage = HttpErrorResponse.error;
+                } 
+        
+                else {
+                  this.successMessage = 'Auction creation failed';
+                }
               }
+        
           );
       }
   }
